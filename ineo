@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-VERSION=1.0.0
+VERSION=1.1.0
 
 DEFAULT_HOME="$HOME/.ineo"
 
@@ -881,7 +881,7 @@ function versions {
   if [ ! -f $cache_file ] || [ ! -s $cache_file ] || [ "$update" == true ]; then
     while [ "$page" -eq 1 ] || [ ! -z "$fetch" ]; do
       fetch="$(curl -s https://api.github.com/repos/neo4j/neo4j/releases?page=$page)"
-      fetch="$(echo $fetch | grep -o -E '"[0-9]+\.[0-9]+\.[0-9]+"' | sed 's/"/  /g')"
+      fetch="$(echo $fetch | grep -o -E '"[0-9]+\.[0-9]+\.[0-9]+(-(RC|MC)[0-9]{1}){0,1}"' | sed 's/"/  /g')"
       releases+="$fetch\n"
       ((page++))
     done
